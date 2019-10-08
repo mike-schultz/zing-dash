@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       theme,
-      expectedYTD: [10000, 25000, 30000, 40000, 60000, 90000, 120000, 130000, 140000],
+      expectedYTD: [80000, 120000, 300000, 350000, 400000, 500000, 600000, 620000, 700000, 730000],
       };
   },
   computed: {
@@ -17,7 +17,7 @@ export default {
       return {
         type: 'bar',
         title: {
-          text: 'Projected Sales'
+          text: 'Projected Revenue'
         },
         series: [
           {
@@ -48,29 +48,21 @@ export default {
       };
     },
     yearToDate() {
-      let types = ['referral', 'organic', 'marketing', 'legacy', 'unknown'];
-      this.data.map((customer) => {
-      if(parseInt(Math.random() * 10) % 2 === 0) {
-          customer.acquisition= types[parseInt(Math.random() * 2)];
-      } else {
-        customer.acquisition= types[parseInt(Math.random() * 4)];
-      }
-        return customer;
-      });
-
       const monthSales = [];
       const currentYear =  new Date().getFullYear();
 
       // Loop through all the customers and bucket each sale by month
-      this.data.forEach((customer) => {
-        let customerTotal = 0;
-        customer.products.forEach((product) => {
+      this.data.forEach((transaction) => {
+      let customerTotal = 0;
+        
           // Check the paid date if its within the calendar year.
-          const paidDate = new Date(product.paid);
+          const paidDate = new Date(transaction.timestamp * 1000);
           if(paidDate.getFullYear() === currentYear) {
-            monthSales[paidDate.getMonth()] = product.price * product.quantity;
+            if(transaction.purchase_type !== 'cancellation') {
+              monthSales[paidDate.getMonth()] = monthSales[paidDate.getMonth()] || 0;
+              monthSales[paidDate.getMonth()] += parseFloat(transaction.amount);
+            }
           }
-        });
       });
       let total = 0;
       return monthSales.map((amount) => {

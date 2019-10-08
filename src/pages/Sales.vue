@@ -1,28 +1,29 @@
 <template>
     <div class="dashboard">
       <section class="dashboard__summary">
-        <scorecard :key="index" v-for="(card, index) in scorecards">
-          <template #value>{{card.value}}</template>
-          <template #header>{{card.header}}</template>
-          <template #subheader>{{card.subheader}}</template>
-        </scorecard>
+        <total-sales-spark :values="transactions"/>
+        <total-ytd-spark :values="transactions"/>
+        <change-customers-spark :values="transactions"/>
       </section>
 
       <section class="dashboard__charts">
         <div class="row">
           <div class="cell" style="height: 300px; width:650px;">
-            <total-sales-per-month :data="customers"/>
+            <latest-transactions :data="last30DaysTransactions"/>
+          </div>
+          <div class="cell" style="height: 300px; width:650px;">
+            <total-sales-per-month :data="transactions"/>
           </div>
 
          <div class="cell" style="height: 300px; width:650px; margin-left: 50px;">
-            <year-to-date :data="customers"/>
+            <year-to-date :data="transactions"/>
           </div>
         </div>
         <div class="row">
            <div class="cell" style="width: 1000px; margin-right: 50px;">
             <zing-grid
               ref="firstGrid"
-              caption="Latest Leads"
+              caption="Latest Transactions"
               layout="row"
               pager
               page-size="3"
@@ -30,13 +31,23 @@
               control-bar="false"
               style="width: 100%;"
             >
+              <zg-colgroup>
+                <!-- <zg-column index="first_name" header="First Name" type="text"></zg-column>
+                <zg-column index="last_name" header="Last Name" type="text"></zg-column> -->
+                <zg-column index="timestamp" header="Date" ></zg-column>
+                <zg-column index="company" header="Company" type="text"></zg-column>
+                <zg-column index="amount" header="Cost" type="currency"></zg-column>
+                <zg-column index="license_type" header="License" ></zg-column>
+                <zg-column index="purchase_type" header="Type" ></zg-column>
+                
+              </zg-colgroup>
             </zing-grid>
-          </div>
+           </div>
                     <!-- <div class="cell" style=" height:300px; width:250px;">
               <product-breakdown :data="customers"/>
           </div> -->
           <div class="cell" style=" height:300px; width:250px;">
-              <acquisition-breakdown :data="customers"/>
+              <transaction-breakdown :data="transactions"/>
           </div>
 
         </div>
@@ -86,50 +97,63 @@
 
 
 <script>
+
 import customers from '../dataset/customers.js';
+import transactions from '../dataset/transactions.js';
 import TotalSalesPerMonth from '../components/TotalSalesPerMonth.vue';
 import ProductBreakdown from '../components/ProductBreakdown.vue';
 import YearToDate from '../components/YearToDate.vue';
-import AcquisitionBreakdown from '../components/AcquisitionBreakdown.vue';
+import TransactionBreakdown from '../components/TransactionBreakdown.vue';
+import LatestTransactions from '../components/LatestTransactions.vue';
 import ZingGrid from "zinggrid";
 
+import Spark from '../components/Spark.vue';
+import SparkScorecard from '../components/SparkScorecard.vue';
+import TotalSalesSpark from '../components/TotalSalesSpark.vue';
+import TotalYTDSpark from '../components/TotalYTDSpark.vue';
+import ChangeCustomersSpark from '../components/ChangeCustomersSpark.vue';
 
 import leads from '../dataset/sales-leads.js';
 
 export default {
   name: 'app',
   components: {
+    Spark,
+    SparkScorecard,
+    LatestTransactions,
     ProductBreakdown,
     TotalSalesPerMonth,
     YearToDate,
-    AcquisitionBreakdown,
+    TransactionBreakdown,
+    TotalSalesSpark,
+    'total-ytd-spark': TotalYTDSpark,
+    ChangeCustomersSpark,
   },
   data() {
     return {
+      transactions,
       customers,
       leads,
       expectedYTD: [10000, 25000, 30000, 40000, 60000, 90000, 120000, 130000, 140000],
-      scorecards: [
-        {
-          value: '$3k',
-          header: 'Sales this Month',
-        },
-        {
-          value: '$94k',
-          header: 'Total YTD Sales',
-        },
-        {
-          value: '+5',
-          header: 'Change in Customers',
-          subheader: '(from last month)',
-        }
-      ]
     };
   },
   mounted() {
-    this.$refs.firstGrid.setData(this.leads);
+    this.$refs.firstGrid.setData(this.last30DaysTransactions);
+  },
+  methods: {
+    formatMonthlySales(event) {
+      return`$${event.value}`;
+    }
   },
   computed: {
+    last30DaysTransactions() {
+      // Limit by the last 30 days
+      const data = this.transactions.filter((entry) => {
+      let THIRTY_DAYS = 1000 * 60 * 60 * 24 * 30;
+      return (new Date().getTime() - entry.timestamp * 1000) < THIRTY_DAYS;
+      });
+      return data;
+    },
     acquisitionBreakdown() {
       const categories = this.customers.reduce((acc, customer) => {
         acc[customer.acquisition] = acc[customer.acquisition] || 0;
@@ -189,5 +213,7 @@ function firstDayOfTheCurrentYear() {
   const today = new Date();
   return new Date('1/1/' + today.getFullYear()).getTime();
 }
+
+
 </script>
 

@@ -12,38 +12,28 @@ export default {
     };
   },
   computed: {
-    salesPerMonth() {
-      const monthSales = [];
-      const currentYear =  new Date().getFullYear();
-
-      // Loop through all the customers and bucket each sale by month
-      this.data.forEach((transaction) => {
-      let customerTotal = 0;
-        
-          // Check the paid date if its within the calendar year.
-          const paidDate = new Date(transaction.timestamp * 1000);
-          if(paidDate.getFullYear() === currentYear) {
-            if(transaction.purchase_type !== 'cancellation') {
-              monthSales[paidDate.getMonth()] = monthSales[paidDate.getMonth()] || 0;
-              monthSales[paidDate.getMonth()] += parseFloat(transaction.amount);
-            }
-          }
-      });
-      return monthSales;
+    transactions() {
+      // Limit by the last 30 days
+      return this.data.map(o => parseFloat(o.amount.slice(1,-1)));
     },
+
     chartConfig() {
       
       return {
-        type: 'bar',
+        type: 'line',
         title: {
-          text: 'Sales Numbers by Month',
+          text: 'Latest Transactions',
           adjustLayout: true,
           align: 'left',
           margin: 0,
         },
+        subtitle: {
+          text: 'Last 30 days',
+          align: 'left'
+        },
         series: [
           {
-            values: this.salesPerMonth,
+            values: this.transactions,
             text: 'Sales'
           }
         ],

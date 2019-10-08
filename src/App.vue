@@ -1,22 +1,13 @@
 <template>
   <div id="app">
     <div class="dashboard">
-      <h1>Your SaaS Dashboard</h1>
       <header>
-
-
-        <section style="display: flex; align-items: center;">
-          <div style="margin-right:10px"> Showing data from</div> <v-date-picker mode='range' v-model="range" />
+      <h1 style="margin: 0">Your Sales Dashboard</h1>
+        <section style="display: flex; align-items: center;margin-right: 26px;">
+          <div style="margin-right:10px"> Showing data from</div> <v-date-picker mode='range' v-model="range" :popover="{placement:'bottom-end'}" />
         </section>
-        <nav>
-          <router-link :to="{ path: '/'}" replace>Summary</router-link>
-          <router-link :to="{ path: '/sales'}" replace>Sales</router-link>
-          <router-link :to="{ path: '/marketing'}" replace>Marketing</router-link>
-          <router-link :to="{ path: '/support'}" replace>Support</router-link>
-        </nav>
-      </header>
-
-      <router-view></router-view>
+        </header>
+        <sales/>
      </div>
   </div>
 </template>
@@ -39,7 +30,6 @@ header {
 nav {
   display: flex;
   align-items: center;
-
 }
 </style>
 <style>
@@ -91,8 +81,12 @@ nav {
 
 <script>
 import customers from './dataset/customers.js';
+import Sales from './pages/Sales.vue';
 export default {
   name: 'app',
+  components: {
+    Sales,
+  },
   data() {
     return {
       customers,
@@ -100,7 +94,8 @@ export default {
       range: {
         start: new Date(2018, 0, 16), // Jan 16th, 2018
         end: new Date(2018, 0, 19)    // Jan 19th, 2018
-      }
+      },
+      
     };
   },
   
