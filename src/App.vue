@@ -4,10 +4,11 @@
       <header>
       <h1 style="margin: 0">Your Sales Dashboard</h1>
         <section style="display: flex; align-items: center;margin-right: 26px;">
-          <div style="margin-right:10px"> Showing data from</div> <v-date-picker mode='range' v-model="range" :popover="{placement:'bottom-end'}" />
+          <div style="margin-right:10px"> Showing data from</div> 
+          <v-date-picker mode='range' v-model="range" :popover="{placement:'bottom-end'}" />
         </section>
         </header>
-        <sales/>
+        <sales :transactions="filteredTransactions"/>
      </div>
   </div>
 </template>
@@ -80,20 +81,28 @@ nav {
 </style>
 
 <script>
-import customers from './dataset/customers.js';
+import transactions from './dataset/transactions.js';
 import Sales from './pages/Sales.vue';
 export default {
   name: 'app',
   components: {
     Sales,
   },
+  computed: {
+    filteredTransactions() {
+      return this.transactions.filter((entry) => {
+        return (entry.timestamp >= this.range.start.getTime() &&
+          entry.timestamp < this.range.end.getTime());
+      });
+    }
+  },
   data() {
     return {
-      customers,
+      transactions,
       expectedYTD: [10000, 25000, 30000, 40000, 60000, 90000, 120000, 130000, 140000],
       range: {
-        start: new Date(2018, 0, 16), // Jan 16th, 2018
-        end: new Date(2018, 0, 19)    // Jan 19th, 2018
+        start: new Date(2019, 0, 1), // Jan 16th, 2018
+        end: new Date(2019, 9, 8)    // Jan 19th, 2018
       },
       
     };

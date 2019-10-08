@@ -17,7 +17,6 @@ Vue.use(VCalendar);
 
 Vue.use(VueRouter);
 import SalesDashboard from './pages/Sales.vue';
-import MarketingDashboard from './pages/Marketing.vue';
 
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -32,7 +31,6 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/sales', component: SalesDashboard},
-    { path: '/marketing', component: MarketingDashboard},
   ]
 });
 

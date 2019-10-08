@@ -46,7 +46,7 @@ export default {
       const max = new Date(`${currentMonth+2}/1/${currentYear}`).getTime();
 
       const list = this.values.filter(entry => {
-        let time = entry.timestamp * 1000;
+        let time = entry.timestamp 
         return time >= min && time < max;
       });
       return list;

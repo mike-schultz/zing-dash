@@ -21,7 +21,7 @@ export default {
       let customerTotal = 0;
         
           // Check the paid date if its within the calendar year.
-          const paidDate = new Date(transaction.timestamp * 1000);
+          const paidDate = new Date(transaction.timestamp);
           if(paidDate.getFullYear() === currentYear) {
             if(transaction.purchase_type !== 'cancellation') {
               monthSales[paidDate.getMonth()] = monthSales[paidDate.getMonth()] || 0;

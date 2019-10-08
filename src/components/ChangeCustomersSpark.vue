@@ -54,7 +54,7 @@ export default {
     customerChange() {
       let monthChange = {};
       this.values.forEach(val => {
-        const date = new Date(val.timestamp * 1000);
+        const date = new Date(val.timestamp);
         const key = date.getMonth() +'-'+ date.getFullYear();
         switch(val.purchase_type) {
           case 'new':
