@@ -60,12 +60,9 @@ export default {
             size: 5,
           },
           plotLabel: {
-            // visible: false,
             alpha: 0,
             x: 70,
             y: -8,
-            // fontSize: 20,
-            // sticky: true,
             text: '%v',
             timeout: 10000000,
             backgroundColor: 'none',
@@ -85,7 +82,6 @@ export default {
         tooltip:{
           visible: false,
         }, 
-
         series: [
           {
             values: this.values,

@@ -23,6 +23,12 @@ export default {
     type: {
       type: String,
       default: 'line',
+    },
+        start: {
+      type: Date,
+    },
+    end: {
+      type: Date,
     }
   },
   components: {
@@ -36,9 +42,14 @@ export default {
       this.currentValue = this.formatValue(e.value);
     },
   },
+  watch: {
+    values() {
+      this.currentValue = this.formatValue(this.accumulatedValues[this.accumulatedValues.length - 1]);
+    }
+  },
   computed: {
     thisYearsTransactions() {
-      const date = new Date();
+      const date = this.end;
       const currentYear = date.getFullYear();
 
       const min = new Date(`1/1/${currentYear}`).getTime();
