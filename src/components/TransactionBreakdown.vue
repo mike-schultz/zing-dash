@@ -19,15 +19,13 @@ export default {
         acc[transaction.purchase_type]++;
         return acc;
       }, {});
-
-
       return categories;
     },
     chartConfig() {
       const config ={
         type: 'pie',
-        title: {
-          text: 'Transactions Breakdown',
+        _title: {
+          text: 'Percentage of Products Sold',
           align: 'center',
           fontSize: '14'
         },
@@ -38,11 +36,12 @@ export default {
           offsetX: 20,
         },
         plotarea: {
-          margin: '20'
+          margin: '5'
         },
         plot: {
           valueBox: {
-            fontSize: 10,
+            fontSize: 12,
+            text: '%t'
           }
         },
         series: Object.keys(this.acquisitionBreakdown).map((type) => {

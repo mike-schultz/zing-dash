@@ -14,7 +14,13 @@ export default {
   computed: {
     transactions() {
       // Limit by the last 30 days
-      return this.data.map(o => parseFloat(o.amount.slice(1,-1)));
+      return this.data.sort((a,b) => {
+        return a.timestamp - b.timestamp
+      })
+      .map(o => {
+        return [o.timestamp, parseFloat(o.amount.slice(1,-1))]
+      });
+      
     },
 
     chartConfig() {
@@ -37,22 +43,22 @@ export default {
             text: 'Sales'
           }
         ],
+        plot: {
+          aspect: 'spline',
+          marker: {
+            visible: false,
+          }
+        },
         crosshairX:{},
         tooltip: { visible: false },
         plotarea: {
-          margin: '35 20 60 50'
+          margin: '35 30 60 60'
 
         },
         scaleX: {
-
-          step: 'month',
-          minValue: firstDayOfTheCurrentYear(),
-          label: {
-            text: 'Month/Year',
-          },
           transform: {
             type: 'date',
-            all: '%m/%y',
+            all: '%M %d, %Y',
           }
         },
         scaleY: {

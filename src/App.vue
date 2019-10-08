@@ -15,22 +15,19 @@
           <change-customers-spark :values="transactions" />
         </section>
 
-        <section class="dashboard__charts">
-          <div class="row">
-            <div class="cell" style="height: 300px; width:650px;">
-              <latest-transactions :data="last30DaysTransactions" />
+        <section class="content">
+          <div class="content__col" style="display: flex;">
+            <div class="content__row">
+              <div class="cell" style="flex:2;">
+                <latest-transactions :data="last30DaysTransactions" />
+              </div>
+              <div class="cell">
+                <transaction-breakdown :data="transactions" />
+              </div>
             </div>
-            <div class="cell" style="height: 300px; width:650px;">
-              <total-sales-per-month :data="transactions" />
-            </div>
-
-            <div class="cell" style="height: 300px; width:650px; margin-left: 50px;">
-              <year-to-date :data="transactions" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="cell" style="width: 1000px; margin-right: 50px;">
-              <zing-grid
+            <div class="content__row">
+              <div class="cell">
+                 <zing-grid
                 ref="firstGrid"
                 caption="Latest Transactions"
                 layout="row"
@@ -39,22 +36,29 @@
                 page-size-options="2,5,20"
                 control-bar="false"
                 style="width: 100%;"
+                sorter
               >
                 <zg-colgroup>
-                  <zg-column index="timestamp" header="Date" type="date"></zg-column>
+                  <zg-column index="timestamp" header="Date" type="date" ></zg-column>
                   <zg-column index="company" header="Company" type="text"></zg-column>
                   <zg-column index="amount" header="Cost" type="currency"></zg-column>
                   <zg-column index="license_type" header="License"></zg-column>
                   <zg-column index="purchase_type" header="Type"></zg-column>
                 </zg-colgroup>
               </zing-grid>
-            </div>
-            <div class="cell" style=" height:300px; width:250px;">
-              <transaction-breakdown :data="transactions" />
+              </div>
             </div>
           </div>
-          <div class="row"></div>
+          <div class="content__col" style="display: flex;">
+            <div class="cell">
+              <total-sales-per-month :data="transactions" />
+            </div>
+            <div class="cell">
+              <year-to-date :data="transactions" />
+            </div>
+          </div>
         </section>
+
       </div>
     </div>
   </div>
@@ -86,6 +90,7 @@ zg-control-bar {
 zg-caption {
   background: #5d7d9a;
   font-weight: bold;
+  display: none;
 }
 zing-grid {
   border: 0px;
@@ -107,8 +112,7 @@ zing-grid {
 .dashboard__summary {
   display: flex;
   justify-content: space-around;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  margin: 0.5rem 0;
 }
 
 .scorecard {
@@ -134,17 +138,40 @@ a.router-link-exact-active {
   font-weight: 500;
   border-bottom: 2px solid#2196f3;
 }
-.cell {
-  height: 100%;
+
+.dashboard {
+  width: 100%;
 }
-.dashboard__charts {
+.content {
   display: flex;
+  height: 600px;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.content__col {
+  display: flex;
+  flex: 1;
   flex-direction: column;
+  min-width: 780px;
+  max-width: 780px;
+  min-height: 600px;
+  max-height: 600px;
 }
-.row {
+.content__col + .content__col {
+  padding-left: 1rem;
+  border-left: 1px solid #ddd;
+}
+.content__row {
+  flex: 1;
   display: flex;
-  margin-bottom: 30px;
 }
+
+.cell {
+  flex: 1;
+  margin: 1rem;
+}
+
 </style>
 
 <script>
