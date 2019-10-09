@@ -85,7 +85,7 @@ export default {
       verticalAlign: 'top',
       layout: 'horizontal',
       cursor: 'hand',
-      highlightPlot: true,
+      // highlightPlot: true,
       item: {
         cursor: 'pointer',
         fontColor: '#373a3c',
@@ -137,7 +137,8 @@ export default {
         backgroundColor: '#fff',
         borderRadius: 5,
         borderColor: '#EEE',
-        padding: 10
+        padding: 10,
+        decimals: 2,
       },
       scaleLabel: {
         fontColor: '#fff',
@@ -154,6 +155,7 @@ export default {
       shadow: false,
       borderRadius:3,
       htmlMode: true,
+      decimals: 2,
     },
     subtitle: {
       color: text.secondary,

@@ -37,13 +37,15 @@
                 control-bar="false"
                 style="width: 100%;"
                 sorter
+                filter
               >
                 <zg-colgroup>
                   <zg-column index="timestamp" header="Date" type="date" ></zg-column>
                   <zg-column index="company" header="Company" type="text"></zg-column>
                   <zg-column index="amount" header="Cost" type="currency"></zg-column>
-                  <zg-column index="license_type" header="License"></zg-column>
-                  <zg-column index="purchase_type" header="Type"></zg-column>
+                  <zg-column index="license_type" header="License" type="select"
+                  type-select-options="enterprise,saas,website"></zg-column>
+                  <zg-column index="purchase_type" header="Type" type="select" type-select-options="renewal, new, cancellation"></zg-column>
                 </zg-colgroup>
               </zing-grid>
               </div>
@@ -65,6 +67,15 @@
 </template>
 
 <style>
+zg-head-cell {
+  background: white;
+  color: #5d7d9a;
+  font-size: 1rem;
+}
+zg-row:nth-child(odd) {
+  background: rgb(250, 250, 250);
+}
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

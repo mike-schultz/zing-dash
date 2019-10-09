@@ -13,10 +13,10 @@
 </template>
 <style scoped>
 .change--positive {
-  color: #009688;
+  color: #04A3F5;
 }
 .change--negative {
-  color: #ff5252;
+  color: #295A73;
 }
 </style>
 
@@ -73,9 +73,9 @@ export default {
       return res;
     },
     chart() {
-      return {
+      const config = {
         type: 'line',
-        theme: 'spark',
+        // theme: 'spark',
         crosshairX: {
           alpha: 0,
           marker: {
@@ -89,7 +89,6 @@ export default {
             visible: false,
           },
         },
-        
         plotarea: {
           margin: '15px'
         },
@@ -98,18 +97,17 @@ export default {
             rules: [
             {
                 rule: "%v > 0",
-                'line-color': "#009688"
+                'line-color': "#04A3F5"
             },
             {
               rule: '%v < 0',
-              'line-color': '#f44336'
+              'line-color': '#295A73'
             }
         ]
         },
         tooltip:{
           visible: false,
         }, 
-
         series: [
           {
             values: this.customerChange,
@@ -118,6 +116,7 @@ export default {
           }
         ]
       };
+      console.log(config);
     }
 
   },

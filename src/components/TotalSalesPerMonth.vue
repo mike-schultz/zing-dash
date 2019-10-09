@@ -47,11 +47,25 @@ export default {
             text: 'Sales'
           }
         ],
-        crosshairX:{},
+        crosshairX:{
+          plotLabel: {
+            negation: "currency",
+            text: '$%v',
+            'thousands-separator': ","
+          }
+        },
         tooltip: { visible: false },
         plotarea: {
           margin: '35 20 60 50'
 
+        },
+        plot: {
+          "animation":{
+            "effect":"4",
+            "speed":"200",
+            "method":"5",
+            "sequence":"3"
+          },
         },
         scaleX: {
 

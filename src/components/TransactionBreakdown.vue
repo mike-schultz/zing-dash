@@ -42,7 +42,13 @@ export default {
           valueBox: {
             fontSize: 12,
             text: '%t'
-          }
+          },
+          animation: {
+            "effect":"2",
+            "speed":"400",
+            "method":"3",
+            "sequence":"3"
+          },
         },
         series: Object.keys(this.acquisitionBreakdown).map((type) => {
           return {

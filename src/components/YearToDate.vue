@@ -9,6 +9,7 @@ export default {
   data() {
     return {
       theme,
+
       expectedYTD: [80000, 120000, 300000, 350000, 400000, 500000, 600000, 620000, 700000, 730000],
       };
   },
@@ -18,6 +19,14 @@ export default {
         type: 'bar',
         title: {
           text: 'Projected Revenue'
+        },
+        plot: {
+          animation: {
+            "effect":"11",
+            "speed":"400",
+            "method":"11",
+            "sequence":"1"
+          },
         },
         series: [
           {
@@ -29,6 +38,11 @@ export default {
             text: 'Actual'
           },
         ],
+        tooltip: {
+                      negation: "currency",
+            text: '$%v',
+            'thousands-separator': ","
+        },
         legend:{},
         scaleX: {
           step: 'month',

@@ -47,18 +47,30 @@ export default {
           aspect: 'spline',
           marker: {
             visible: false,
+          },
+          animation: {
+              effect: "ANIMATION_SLIDE_LEFT"
+          },
+        },
+        crosshairX:{
+          plotLabel :{
+            negation: "currency",
+            text: '$%v',
+            'thousands-separator': ","
           }
         },
-        crosshairX:{},
-        tooltip: { visible: false },
+        tooltip: { 
+          visible: false,
+
+        },
         plotarea: {
-          margin: '35 30 60 60'
+          margin: '35 35 60 60'
 
         },
         scaleX: {
           transform: {
             type: 'date',
-            all: '%M %d, %Y',
+            all: '%M %d',
           }
         },
         scaleY: {
