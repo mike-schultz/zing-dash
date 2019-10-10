@@ -4,7 +4,6 @@
 
 <script>
 import theme from '../theme/theme.js';
-
 export default {
   props: ['data'],
   data() {
@@ -41,21 +40,9 @@ export default {
             backgroundColor: '#45D6C4'
           }
         },
-
       ]
       const config ={
         type: 'pie',
-        _title: {
-          text: 'Percentage of Products Sold',
-          align: 'center',
-          fontSize: '14'
-        },
-        legend: {
-          visible: false,
-          verticalAlign: 'bottom',
-          align : 'center',
-          offsetX: 20,
-        },
         tooltip: {
           text: '%npv%'
         },
@@ -68,14 +55,13 @@ export default {
             text: '%t'
           },
           animation: {
-            "effect":"2",
-            "speed":"400",
-            "method":"3",
-            "sequence":"3",
+            effect: 2,
+            speed: 400,
+            method: 3,
+            sequence: 3,
             delay: 2000,
           },
           hoverState: {
-            // borderColor: '#04A3F5',
          	  borderWidth: 2,
           }
         },
@@ -89,9 +75,5 @@ export default {
       return config;
     },
   }
-}
-function firstDayOfTheCurrentYear() {
-  const today = new Date();
-  return new Date('1/1/' + today.getFullYear()).getTime();
 }
 </script>

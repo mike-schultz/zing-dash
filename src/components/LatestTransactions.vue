@@ -13,14 +13,10 @@ export default {
   },
   computed: {
     transactions() {
-      // Limit by the last 30 days
-      return this.data.sort((a,b) => {
-        return a.timestamp - b.timestamp
-      })
-      .map(o => {
+      let sorted = this.data.sort((a,b) => a.timestamp - b.timestamp);
+      return sorted.map(o => {
         return [o.timestamp, parseFloat(o.amount.slice(1,-1))]
       });
-      
     },
 
     chartConfig() {
@@ -88,8 +84,4 @@ export default {
   }
 };
 
-function firstDayOfTheCurrentYear() {
-  const today = new Date();
-  return new Date('1/1/' + today.getFullYear()).getTime();
-}
 </script>

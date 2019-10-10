@@ -11,7 +11,7 @@
     "core-js": "^2.6.5",
     "v-calendar": "^1.0.0-beta.22",
     "vue": "^2.6.10",
-    "zingchart-vue": "^1.0.0",
+    "zingchart-vue": "^1.0.1",
     "zinggrid": "^1.1.1"
   },
   "devDependencies": {
