@@ -1,6 +1,6 @@
 <template>
-  <div class="scorecard">
-    <spark :config="chart" :values="customerChange" @mouseover="changeValue"/>
+  <div class="scorecard" @mouseleave="setGuide">
+    <zingchart ref="chart" :data="chart" :values="customerChange" :width="100" :height="50" @guide_mousemove="changeValue"/>
     <div class="scorecard__value" :class="changeClass">
       <font-awesome-icon v-if="currentValue < 0" icon="chevron-down"/>
       <font-awesome-icon v-else icon="chevron-up"/>
@@ -8,7 +8,7 @@
      </div>
     <div class="scorecard__header">Change in Customers</div>
     <div class="scorecard__subheader">from the month prior</div>
-
+ 
   </div>
 </template>
 <style scoped>
@@ -42,9 +42,17 @@ export default {
       default: 'line',
     }
   },
+  mounted() {
+    this.setGuide();
+  },
   methods: {
     changeValue(e) {
-      this.currentValue = e.value;
+      this.currentValue = e.items[0].value;
+    },
+    setGuide() {
+      zingchart.exec(this.$refs.chart.$el.getAttribute('id'), 'setguide', {
+        keyvalue : this.customerChange.length - 1
+      });
     },
   },
   computed: {
@@ -75,7 +83,7 @@ export default {
     chart() {
       const config = {
         type: 'line',
-        // theme: 'spark',
+        theme: 'spark',
         crosshairX: {
           alpha: 0,
           marker: {
@@ -116,7 +124,7 @@ export default {
           }
         ]
       };
-      console.log(config);
+      return config;
     }
 
   },

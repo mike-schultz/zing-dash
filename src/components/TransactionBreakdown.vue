@@ -49,6 +49,10 @@ export default {
             "method":"3",
             "sequence":"3"
           },
+          hoverState: {
+            borderColor: '#04A3F5',
+         	  borderWidth: 2,
+          }
         },
         series: Object.keys(this.acquisitionBreakdown).map((type) => {
           return {

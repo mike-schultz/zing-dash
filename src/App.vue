@@ -19,10 +19,10 @@
           <div class="content__col" style="display: flex;">
             <div class="content__row">
               <div class="cell" style="flex:2;">
-                <latest-transactions :data="last30DaysTransactions" />
+                <latest-transactions ref="latestTransactions" :data="last30DaysTransactions" />
               </div>
               <div class="cell">
-                <transaction-breakdown :data="transactions" />
+                <transaction-breakdown ref="transactionBreakdown" :data="transactions" />
               </div>
             </div>
             <div class="content__row">
@@ -38,6 +38,7 @@
                 style="width: 100%;"
                 sorter
                 filter
+                height="150px"
               >
                 <zg-colgroup>
                   <zg-column index="timestamp" header="Date" type="date" ></zg-column>
@@ -106,6 +107,15 @@ zg-caption {
 zing-grid {
   border: 0px;
 }
+
+zing-grid input[type="text"], zing-grid input[type="number"]{
+  border-radius: 5px;
+}
+
+
+/* SELECT */
+
+
 .scorecard {
   padding: 1rem;
 }
@@ -239,6 +249,34 @@ export default {
   },
   mounted() {
     this.updateGrid();
+
+    const zgRef = document.querySelector('zing-grid');
+
+      // Add listener for event
+      // Trigger by mouse over a record / row
+      zgRef.addEventListener('record:mouseover', (e) => {
+        let ltChart = this.$refs.latestTransactions;
+        const chartId = ltChart.$children[0].$el.getAttribute('id');
+        zingchart.exec(chartId, 'setguide', {
+          keyvalue : e.detail.ZGData.data.timestamp,
+        });
+
+
+        let ltPie = this.$refs.transactionBreakdown;
+        const pieId = ltPie.$children[0].$el.getAttribute('id');
+
+        // Determine the node index that corresponds to the transaction type
+        const data = zingchart.exec(pieId, 'getseriesdata');
+        const index = data.findIndex((o) => {
+          return o.text === e.detail.ZGData.data.purchase_type;
+        });
+        zingchart.exec(pieId, 'showhoverstate', {
+          plotindex: index,
+          nodeindex: 0,
+        });
+
+
+      });
   },
   data() {
     return {

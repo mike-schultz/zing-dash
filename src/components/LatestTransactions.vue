@@ -24,7 +24,6 @@ export default {
     },
 
     chartConfig() {
-      
       return {
         type: 'line',
         title: {
@@ -57,6 +56,9 @@ export default {
             negation: "currency",
             text: '$%v',
             'thousands-separator': ","
+          },
+          marker: {
+            visible: false,
           }
         },
         tooltip: { 
