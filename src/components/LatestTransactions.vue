@@ -48,7 +48,7 @@ export default {
             visible: false,
           },
           animation: {
-              effect: "ANIMATION_SLIDE_LEFT"
+              effect: "ANIMATION_SLIDE_LEFT",
           },
         },
         crosshairX:{

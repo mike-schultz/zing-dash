@@ -2,8 +2,8 @@
   <div class="scorecard" @mouseleave="setGuide">
     <zingchart ref="chart" :data="chart" :values="customerChange" :width="100" :height="50" @guide_mousemove="changeValue"/>
     <div class="scorecard__value" :class="changeClass">
-      <font-awesome-icon v-if="currentValue < 0" icon="chevron-down"/>
-      <font-awesome-icon v-else icon="chevron-up"/>
+       <span v-if="currentValue < 0" class="chevron bottom"></span>
+       <span v-else class="chevron top"></span>
       &nbsp;<span>{{Math.abs(currentValue)}}</span>
      </div>
     <div class="scorecard__header">Change in Customers</div>

@@ -36,9 +36,10 @@
                 page-size-options="2,5,20"
                 control-bar="false"
                 style="width: 100%;"
-                sorter
+                sort
                 filter
                 height="150px"
+                :data.prop="last30DaysTransactions"
               >
                 <zg-colgroup>
                   <zg-column index="timestamp" header="Date" type="date" ></zg-column>
@@ -193,6 +194,36 @@ a.router-link-exact-active {
   margin: 1rem;
 }
 
+/* CHEVRONS */
+.chevron::before {
+	border-style: solid;
+	border-width: 0.15em 0.15em 0 0;
+	content: '';
+	display: inline-block;
+	height: 0.45em;
+	left: 0.15em;
+	position: relative;
+	top: 0.45em;
+	transform: rotate(-45deg);
+	vertical-align: top;
+	width: 0.45em;
+}
+
+.chevron.right:before {
+	left: 0;
+	transform: rotate(45deg);
+}
+
+.chevron.bottom:before {
+	top: .15em;
+	transform: rotate(135deg);
+}
+
+.chevron.left:before {
+	left: 0.25em;
+	transform: rotate(-135deg);
+}
+
 </style>
 
 <script>
@@ -220,9 +251,6 @@ export default {
     ChangeCustomersSpark
   },
   watch: {
-    last30DaysTransactions() {
-      this.updateGrid();
-    }
   },
   computed: {
     transactions() {
@@ -243,12 +271,8 @@ export default {
     }
   },
   methods: {
-    updateGrid() {
-      this.$refs.firstGrid.setData(this.last30DaysTransactions);
-    }
   },
   mounted() {
-    this.updateGrid();
 
     const zgRef = document.querySelector('zing-grid');
 
