@@ -21,12 +21,8 @@
 </style>
 
 <script>
-import Spark from './Spark.vue';
 
 export default {
-  components: {
-    Spark
-  },
   props: ['values'],
     props: {
     values: {
