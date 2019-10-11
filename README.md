@@ -1,4 +1,4 @@
-# walmart
+# Vue Dashboard
 
 ## Project setup
 ```
