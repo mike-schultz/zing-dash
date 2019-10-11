@@ -31,31 +31,7 @@ export default {
 
     // Attach an event listener to ZingGrid
     this.$refs.myGrid.addEventListener('record:mouseover', (e) => {
-
-      // Set a guide on the LatestTransactions line chart to the corresponding row
-      let ltChart = this.$refs.latestTransactions;
-      const chartId = ltChart.$children[0].$el.getAttribute('id');
-      zingchart.exec(chartId, 'setguide', {
-        keyvalue : e.detail.ZGData.data.timestamp,
-      });
-
-      // Set a hoverState on the LatestTransactions pie chart
-      let ltPie = this.$refs.transactionBreakdown;
-      const pieId = ltPie.$children[0].$el.getAttribute('id');
-
-      // Determine the node index that corresponds to the transaction type
-      const data = zingchart.exec(pieId, 'getseriesdata');
-      const index = data.findIndex((o) => {
-        return o.text === e.detail.ZGData.data.purchase_type;
-      });
-
-
-      zingchart.exec(pieId, 'showhoverstate', {
-        plotindex: index,
-        nodeindex: 0,
-      });
-
-
+      this.$emit('mouseover', e);
     });
   }
 }

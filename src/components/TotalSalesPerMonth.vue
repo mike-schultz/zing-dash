@@ -14,7 +14,7 @@ export default {
   computed: {
     salesPerMonth() {
       const monthSales = [];
-      const currentYear =  new Date().getFullYear();
+      const currentYear = new Date().getFullYear();
 
       // Loop through all the customers and bucket each sale by month
       this.data.forEach((transaction) => {
